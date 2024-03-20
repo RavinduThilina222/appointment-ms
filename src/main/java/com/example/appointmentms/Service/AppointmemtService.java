@@ -25,8 +25,8 @@ public class AppointmemtService {
         return appointmentRepository.findAllAppointmentBySessionIdAndAppointmentId(sessionId, appointmentId);
     }
     
-    public Appointment updateAppointmentStatus(int appointmentId, String appointmentStatus) {
-        Appointment appointment = appointmentRepository.findById(appointmentId).get();
+    public Appointment updateAppointmentStatus(int session_id,int appointmentId, String appointmentStatus) {
+        Appointment appointment = appointmentRepository.findByAppointment_Id(session_id,appointmentId);
         appointment.setStatus(appointmentStatus);
         return appointmentRepository.save(appointment);
     }

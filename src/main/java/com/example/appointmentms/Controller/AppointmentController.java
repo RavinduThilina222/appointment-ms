@@ -23,21 +23,21 @@ public class AppointmentController {
     public List<Appointment> getAllAppointmentsbySessionId(@RequestParam("session_id") int sessionId) {
         return appointmentService.getAllAppointmentsbySessionId(sessionId);
     }
-    /*
+    
     @GetMapping(path = "/appointments", params = {"session_id", "appointment_id"})
-    public List<Appointment> getAllAppointmentbySessionIdAndAppointmentId(@RequestParam("session_id") int sessionId, @RequestParam("appointment_id") int appointmentId) {
+    public List<Appointment> getAllAppointmentbySessionId(@RequestParam("session_id") int sessionId, @RequestParam("appointment_id") int appointmentId) {
         return appointmentService.getAllAppointmentbySessionId(sessionId, appointmentId);
-    }*/
-
-    @PutMapping(path = "/appointments", params = {"appointment_id", "status"})
-    public Appointment updateAppointmentStatus(@RequestParam("appointment_id") int appointmentId, @RequestParam("status") String status) {
-        return appointmentService.updateAppointmentStatus(appointmentId, status);
     }
 
-@PutMapping(path = "/appointments")
-public Appointment updateAppointment(@RequestBody Appointment appointment){
-    return appointmentService.updateAppointment(appointment);
-}
+    @PutMapping(path = "/appointments", params = {"session_id","appointment_id", "status"})
+    public Appointment updateAppointmentStatus(@RequestParam("session_id") int session_id,@RequestParam("appointment_id") int appointmentId, @RequestParam("status") String status) {
+        return appointmentService.updateAppointmentStatus(session_id,appointmentId, status);
+    }
+
+    @PutMapping(path = "/appointments")
+    public Appointment updateAppointment(@RequestBody Appointment appointment){
+        return appointmentService.updateAppointment(appointment);
+    }
 
     @DeleteMapping(path = "/appointments")
     public void deleteAppointment(@RequestParam("appointmentId") int appointmentId){

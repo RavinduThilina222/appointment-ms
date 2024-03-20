@@ -3,7 +3,6 @@ package com.example.appointmentms.Data;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -15,11 +14,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Integer
     @Query("select a from Appointment a where a.Session_Id = :session_id and a.Appointment_Id = :appointment_id")
     List<Appointment> findAllAppointmentBySessionIdAndAppointmentId(@Param("session_id")int Session_Id,@Param("appointment_id")int Appointment_Id);
 
-    /*
-    @Query("UPDATE Appointment a SET a.Status = :status WHERE a.Appointment_Id = :appointmentId")
-    void updateAppointmentStatus(@Param("appointmentId") int appointmentId, @Param("status") String status);
-    */
-    
+    @Query("SELECT a FROM Appointment a WHERE a.Session_Id = :session_id AND a.Appointment_Id = :appointmentId")
+    Appointment findByAppointment_Id(int session_id,int appointmentId);
+
     //write a method for find count of  all patient_id's by session id and status is not cancelled.
     @Query("select count(a.Patient_Id) from Appointment a where a.Session_Id = :session_id and a.Status != 'Cancelled'")
     int findCountOfAllPatientIdsBySessionId(@Param("session_id")int Session_Id);
