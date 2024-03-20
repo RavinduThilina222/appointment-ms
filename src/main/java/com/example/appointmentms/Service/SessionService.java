@@ -18,6 +18,7 @@ public class SessionService {
         return sessionRepository.findAll();
     }
    
+    @SuppressWarnings("null")
     public Session addSession(Session session) {
         return sessionRepository.save(session);
     }
@@ -26,6 +27,7 @@ public class SessionService {
     }
     
     
+    @SuppressWarnings("null")
     public Session updateSession(Session session) {
         return sessionRepository.save(session);
     }

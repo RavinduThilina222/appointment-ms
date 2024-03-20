@@ -24,10 +24,13 @@ public class AppointmemtService {
     public List<Appointment> getAllAppointmentbySessionId(int sessionId, int appointmentId){
         return appointmentRepository.findAllAppointmentBySessionIdAndAppointmentId(sessionId, appointmentId);
     }
-
-    public void updateAppointmentStatus(int Appointment_Id, int Status){
-        appointmentRepository.updateAppointmentStatus(Appointment_Id, Status);
+    
+    public Appointment updateAppointmentStatus(int appointmentId, String appointmentStatus) {
+        Appointment appointment = appointmentRepository.findById(appointmentId).get();
+        appointment.setStatus(appointmentStatus);
+        return appointmentRepository.save(appointment);
     }
+   
 
     @SuppressWarnings("null")
     public Appointment updateAppointment(Appointment appointment){
@@ -37,4 +40,13 @@ public class AppointmemtService {
     public void deleteAppointment(int Appointment_Id){
         appointmentRepository.deleteById(Appointment_Id);
     }
+
+    public List<Appointment> findAllAppointmentsAvailableOnDate(String date) {
+        return appointmentRepository.findAllAppointmentsAvailableOnDate(date);
+    }
+
+    public int findCountOfAllPatientIdsBySessionId(int Session_Id) {
+        return appointmentRepository.findCountOfAllPatientIdsBySessionId(Session_Id);
+    }
+
 }
