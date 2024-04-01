@@ -33,7 +33,7 @@ public class AppointmentController {
     }
 
     @GetMapping(value = "/appointments/today",params = {"patient_id"})
-    public List<Appointment> getAppointmentsAvailableTodayByPatientId(@RequestParam int patient_id) {
+    public List<Appointment> getAppointmentsAvailableTodayByPatientIdAndDate(@RequestParam int patient_id) {
         // Get today's date
         LocalDate today = LocalDate.now();
         
@@ -42,11 +42,11 @@ public class AppointmentController {
         String formattedDate = today.format(formatter);
 
         // Call repository method with today's date
-        return appointmentService.findAllAppointmentsAvailableOnDate(formattedDate,patient_id);
+        return appointmentService.findAllAppointmentsAvailableOnDateByPatientIdAndDate(formattedDate,patient_id);
     }
 
     @GetMapping(value = "/appointments",params = {"date","patient_id"})
-    public List<Appointment> getAvailableAppointmentsByDateAndPatientId(@RequestParam String date,@RequestParam int patient_id) {
+    public List<Appointment> getAvailableAppointmentsByDateAndPatientIdAndDate(@RequestParam String date,@RequestParam int patient_id) {
         // Get date
         LocalDate localDate = LocalDate.parse(date);
 
@@ -55,11 +55,11 @@ public class AppointmentController {
         String formattedDate = localDate.format(formatter);
 
         // Call repository method with date
-        return appointmentService.findAllAppointmentsAvailableOnDate(formattedDate,patient_id);
+        return appointmentService.findAllAppointmentsAvailableOnDateByPatientIdAndDate(formattedDate,patient_id);
     }
 
     @GetMapping(value = "/appointments/history",params = {"patient_id"})
-    public List<Appointment> getAppointmentsHistoryByPatientId(@RequestParam int patient_id) {
+    public List<Appointment> getAppointmentsHistoryByPatientIdAndDate(@RequestParam int patient_id) {
         // Get today's date
         LocalDate today = LocalDate.now();
 
@@ -68,11 +68,11 @@ public class AppointmentController {
         String formattedDate = today.format(formatter);
 
         // Call repository method with today's date
-        return appointmentService.findAllPastAppointments(formattedDate,patient_id);
+        return appointmentService.findAllPastAppointmentsByPatientIdAndDate(formattedDate,patient_id);
     }
 
     @GetMapping(value = "/appointments/upcoming",params = {"patient_id"})
-    public List<Appointment> getUpcomingAppointmentsByPatientId(@RequestParam int patient_id) {
+    public List<Appointment> getUpcomingAppointmentsByPatientIdAndDate(@RequestParam int patient_id) {
         // Get today's date
         LocalDate today = LocalDate.now();
 
@@ -81,7 +81,7 @@ public class AppointmentController {
         String formattedDate = today.format(formatter);
 
         // Call repository method with today's date
-        return appointmentService.findAllUpcomingAppointments(formattedDate,patient_id);
+        return appointmentService.findAllUpcomingAppointmentsByPatientIdAndDate(formattedDate,patient_id);
     }
 
     @GetMapping("/appointments/patients-count")

@@ -26,16 +26,16 @@ public class AppointmentService {
         return appointmentRepository.findAppointmentBySessionIdAndAppointmentId(Session_Id,Appointment_Id);
     }
 
-    public List<Appointment> findAllAppointmentsAvailableOnDate(String date,int patient_id) {
-        return appointmentRepository.findAllAppointmentsAvailableOnDate(date, patient_id);
+    public List<Appointment> findAllAppointmentsAvailableOnDateByPatientIdAndDate(String date,int patient_id) {
+        return appointmentRepository.findAllAppointmentsAvailableOnDateByPatientIdAndDate(date, patient_id);
     }
 
-    public List<Appointment> findAllUpcomingAppointments(String date, int patient_id) {
-        return appointmentRepository.findAllUpcomingAppointments(date, patient_id);
+    public List<Appointment> findAllUpcomingAppointmentsByPatientIdAndDate(String date, int patient_id) {
+        return appointmentRepository.findAllUpcomingAppointmentsByPatientIdAndDate(date, patient_id);
     }
 
-    public List<Appointment> findAllPastAppointments(String date, int patient_id) {
-        return appointmentRepository.findAllPastAppointments(date, patient_id);
+    public List<Appointment> findAllPastAppointmentsByPatientIdAndDate(String date, int patient_id) {
+        return appointmentRepository.findAllPastAppointmentsByPatientIdAndDate(date, patient_id);
     }
 
     public int findCountOfAllPatientsBySessionId(int Session_Id) {

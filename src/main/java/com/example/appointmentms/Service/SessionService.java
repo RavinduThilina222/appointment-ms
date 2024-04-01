@@ -27,16 +27,16 @@ public class SessionService {
         return sessionRepository.findAllSessionsByDoctorId(doctorId);
     }
 
-    public List<Session> findAllSessionsAvailableOnDateByDoctorId(int doctorId, String date) {
-        return sessionRepository.findAllSessionsAvailableOnDateByDoctorId(doctorId, date);
+    public List<Session> findAllSessionsAvailableOnDateByDoctorIdAndDate(int doctorId, String date) {
+        return sessionRepository.findAllSessionsAvailableOnDateByDoctorIdAndDate(doctorId, date);
     }
 
-    public List<Session> findAllUpcomingSessionsByDoctorId(int doctorId, String date) {
-        return sessionRepository.findAllUpcomingSessionsByDoctorId(doctorId, date);
+    public List<Session> findAllUpcomingSessionsByDoctorIdAndDate(int doctorId, String date) {
+        return sessionRepository.findAllUpcomingSessionsByDoctorIdAndDate(doctorId, date);
     }
 
-    public List<Session> findAllPastSessionsByDoctorId(int doctorId, String date) {
-        return sessionRepository.findAllPastSessionsByDoctorId(doctorId, date);
+    public List<Session> findAllPastSessionsByDoctorIdAndDate(int doctorId, String date) {
+        return sessionRepository.findAllPastSessionsByDoctorIdAndDate(doctorId, date);
     }
 
     public Session addSession(Session session) {
