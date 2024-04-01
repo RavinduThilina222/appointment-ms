@@ -17,11 +17,6 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
-    @PostMapping(path = "/appointments")
-    public Appointment addAppointment(@RequestBody Appointment appointment){
-        return appointmentService.addAppointment(appointment);
-    }
-
     @GetMapping(path = "/appointments/sessions/{id}")
     public List<Appointment> getAllAppointmentsBySessionId(@PathVariable int id){
         return appointmentService.getAllAppointmentsBySessionId(id);
@@ -32,16 +27,9 @@ public class AppointmentController {
         return appointmentService.getAppointmentByReferenceNo(reference_no);
     }
 
-    @PatchMapping(path = "appointments/{appointment_id}")
-    public Appointment updateAppointmentStatus(@PathVariable int appointment_id, @RequestBody Map<String,String> requestBody) {
-        int session_id = Integer.parseInt(requestBody.get("session_id"));
-        String status = requestBody.get("status");
-        return appointmentService.updateAppointmentStatus(session_id,appointment_id, status);
-    }
-
-    @PutMapping(path = "/appointments")
-    public Appointment updateAppointment(@RequestBody Appointment appointment){
-        return appointmentService.updateAppointment(appointment);
+    @GetMapping(path = "/appointments", params = {"Session_Id","Appointment_Id"})
+    public List<Appointment> getAppointmentBySessionIdAndAppointmentId(@RequestParam int Session_Id,@RequestParam int Appointment_Id) {
+        return appointmentService.getAppointmentBySessionIdAndAppointmentId(Session_Id,Appointment_Id);
     }
 
     @GetMapping(value = "/appointments/today",params = {"patient_id"})
@@ -99,6 +87,23 @@ public class AppointmentController {
     @GetMapping("/appointments/patients-count")
     public int findCountOfAllPatientsBySessionId(@RequestParam int session_id) {
         return appointmentService.findCountOfAllPatientsBySessionId(session_id);
+    }
+
+    @PostMapping(path = "/appointments")
+    public Appointment addAppointment(@RequestBody Appointment appointment){
+        return appointmentService.addAppointment(appointment);
+    }
+
+    @PutMapping(path = "/appointments")
+    public Appointment updateAppointment(@RequestBody Appointment appointment){
+        return appointmentService.updateAppointment(appointment);
+    }
+
+    @PatchMapping(path = "appointments/{appointment_id}")
+    public Appointment updateAppointmentStatus(@PathVariable int appointment_id, @RequestBody Map<String,String> requestBody) {
+        int session_id = Integer.parseInt(requestBody.get("session_id"));
+        String status = requestBody.get("status");
+        return appointmentService.updateAppointmentStatus(session_id,appointment_id, status);
     }
 
 }

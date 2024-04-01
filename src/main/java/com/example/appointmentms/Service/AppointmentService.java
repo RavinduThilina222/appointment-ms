@@ -14,10 +14,6 @@ public class AppointmentService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    public Appointment addAppointment(Appointment appointment){
-        return appointmentRepository.save(appointment);
-    }
-
     public List<Appointment> getAllAppointmentsBySessionId(int sessionId){
         return appointmentRepository.findAllAppointmentsBySessionId(sessionId);
     }
@@ -25,15 +21,9 @@ public class AppointmentService {
     public List<Appointment> getAppointmentByReferenceNo(int Reference_No) {
         return appointmentRepository.findAppointmentByReferenceNo(Reference_No);
     }
-    
-    public Appointment updateAppointmentStatus(int session_id,int appointmentId, String appointmentStatus) {
-        Appointment appointment = appointmentRepository.findByAppointment_Id(session_id,appointmentId);
-        appointment.setStatus(appointmentStatus);
-        return appointmentRepository.save(appointment);
-    }
 
-    public Appointment updateAppointment(Appointment appointment){
-        return appointmentRepository.save(appointment);
+    public List<Appointment> getAppointmentBySessionIdAndAppointmentId(int Session_Id,int Appointment_Id) {
+        return appointmentRepository.findAppointmentBySessionIdAndAppointmentId(Session_Id,Appointment_Id);
     }
 
     public List<Appointment> findAllAppointmentsAvailableOnDate(String date,int patient_id) {
@@ -50,6 +40,20 @@ public class AppointmentService {
 
     public int findCountOfAllPatientsBySessionId(int Session_Id) {
         return appointmentRepository.findCountOfAllPatientsBySessionId(Session_Id);
+    }
+
+    public Appointment addAppointment(Appointment appointment){
+        return appointmentRepository.save(appointment);
+    }
+
+    public Appointment updateAppointment(Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
+
+    public Appointment updateAppointmentStatus(int session_id,int appointmentId, String appointmentStatus) {
+        Appointment appointment = appointmentRepository.findByAppointment_Id(session_id,appointmentId);
+        appointment.setStatus(appointmentStatus);
+        return appointmentRepository.save(appointment);
     }
 
 }
