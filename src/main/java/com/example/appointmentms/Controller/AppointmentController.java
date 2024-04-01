@@ -1,37 +1,42 @@
 package com.example.appointmentms.Controller;
 
 import com.example.appointmentms.Data.Appointment;
-import com.example.appointmentms.Service.AppointmemtService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.appointmentms.Service.AppointmentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class AppointmentController {
-    @Autowired
-    private AppointmemtService appointmentService;
+    private final AppointmentService appointmentService;
+
+    public AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
+    }
 
     @PostMapping(path = "/appointments")
     public Appointment addAppointment(@RequestBody Appointment appointment){
         return appointmentService.addAppointment(appointment);
     }
 
-    @GetMapping(path = "/appointments", params = "session_id")
-    public List<Appointment> getAllAppointmentsbySessionId(@RequestParam("session_id") int sessionId) {
-        return appointmentService.getAllAppointmentsbySessionId(sessionId);
+    @GetMapping(path = "/appointments/sessions/{id}")
+    public List<Appointment> getAllAppointmentsBySessionId(@PathVariable int id){
+        return appointmentService.getAllAppointmentsBySessionId(id);
     }
     
-    @GetMapping(path = "/appointments", params = {"session_id", "appointment_id"})
-    public List<Appointment> getAllAppointmentbySessionId(@RequestParam("session_id") int sessionId, @RequestParam("appointment_id") int appointmentId) {
-        return appointmentService.getAllAppointmentbySessionId(sessionId, appointmentId);
+    @GetMapping(path = "/appointments", params = {"reference_no"})
+    public List<Appointment> getAppointmentByReferenceNo(@RequestParam int reference_no) {
+        return appointmentService.getAppointmentByReferenceNo(reference_no);
     }
 
-    @PutMapping(path = "/appointments", params = {"session_id","appointment_id", "status"})
-    public Appointment updateAppointmentStatus(@RequestParam("session_id") int session_id,@RequestParam("appointment_id") int appointmentId, @RequestParam("status") String status) {
-        return appointmentService.updateAppointmentStatus(session_id,appointmentId, status);
+    @PatchMapping(path = "appointments/{appointment_id}")
+    public Appointment updateAppointmentStatus(@PathVariable int appointment_id, @RequestBody Map<String,String> requestBody) {
+        int session_id = Integer.parseInt(requestBody.get("session_id"));
+        String status = requestBody.get("status");
+        return appointmentService.updateAppointmentStatus(session_id,appointment_id, status);
     }
 
     @PutMapping(path = "/appointments")
@@ -39,13 +44,8 @@ public class AppointmentController {
         return appointmentService.updateAppointment(appointment);
     }
 
-    @DeleteMapping(path = "/appointments")
-    public void deleteAppointment(@RequestParam("appointmentId") int appointmentId){
-        appointmentService.deleteAppointment(appointmentId);
-    }  
-
-    @GetMapping("/appointments/today")
-    public List<Appointment> getAppointmentsAvailableToday() {
+    @GetMapping(value = "/appointments/today",params = {"patient_id"})
+    public List<Appointment> getAppointmentsAvailableTodayByPatientId(@RequestParam int patient_id) {
         // Get today's date
         LocalDate today = LocalDate.now();
         
@@ -54,14 +54,51 @@ public class AppointmentController {
         String formattedDate = today.format(formatter);
 
         // Call repository method with today's date
-        return appointmentService.findAllAppointmentsAvailableOnDate(formattedDate);
+        return appointmentService.findAllAppointmentsAvailableOnDate(formattedDate,patient_id);
     }
 
-    @GetMapping("/appointments/count") // Unique path for counting
-    public int findCountOfAllPatientIdsBySessionId(@RequestParam("session_id") int sessionId) {
-        return appointmentService.findCountOfAllPatientIdsBySessionId(sessionId);
+    @GetMapping(value = "/appointments",params = {"date","patient_id"})
+    public List<Appointment> getAvailableAppointmentsByDateAndPatientId(@RequestParam String date,@RequestParam int patient_id) {
+        // Get date
+        LocalDate localDate = LocalDate.parse(date);
+
+        // Format date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = localDate.format(formatter);
+
+        // Call repository method with date
+        return appointmentService.findAllAppointmentsAvailableOnDate(formattedDate,patient_id);
     }
 
-    
+    @GetMapping(value = "/appointments/history",params = {"patient_id"})
+    public List<Appointment> getAppointmentsHistoryByPatientId(@RequestParam int patient_id) {
+        // Get today's date
+        LocalDate today = LocalDate.now();
+
+        // Format today's date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = today.format(formatter);
+
+        // Call repository method with today's date
+        return appointmentService.findAllPastAppointments(formattedDate,patient_id);
+    }
+
+    @GetMapping(value = "/appointments/upcoming",params = {"patient_id"})
+    public List<Appointment> getUpcomingAppointmentsByPatientId(@RequestParam int patient_id) {
+        // Get today's date
+        LocalDate today = LocalDate.now();
+
+        // Format today's date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = today.format(formatter);
+
+        // Call repository method with today's date
+        return appointmentService.findAllUpcomingAppointments(formattedDate,patient_id);
+    }
+
+    @GetMapping("/appointments/patients-count")
+    public int findCountOfAllPatientsBySessionId(@RequestParam int session_id) {
+        return appointmentService.findCountOfAllPatientsBySessionId(session_id);
+    }
 
 }
