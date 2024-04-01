@@ -101,9 +101,9 @@ public class AppointmentController {
 
     @PatchMapping(path = "appointments/{appointment_id}")
     public Appointment updateAppointmentStatus(@PathVariable int appointment_id, @RequestBody Map<String,String> requestBody) {
-        int session_id = Integer.parseInt(requestBody.get("session_id"));
+        int session_id = Integer.parseInt(requestBody.get("session_Id"));
         String status = requestBody.get("status");
-        return appointmentService.updateAppointmentStatus(session_id,appointment_id, status);
+        return appointmentService.updateAppointmentStatus(session_id, appointment_id, status);
     }
 
 }

@@ -50,7 +50,7 @@ public class AppointmentService {
         return appointmentRepository.save(appointment);
     }
 
-    public Appointment updateAppointmentStatus(int session_id,int appointmentId, String appointmentStatus) {
+    public Appointment updateAppointmentStatus(int session_id,int appointmentId,String appointmentStatus) {
         Appointment appointment = appointmentRepository.findByAppointment_Id(session_id,appointmentId);
         appointment.setStatus(appointmentStatus);
         return appointmentRepository.save(appointment);
