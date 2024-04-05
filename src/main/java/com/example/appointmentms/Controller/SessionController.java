@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.appointmentms.Data.Session;
 import com.example.appointmentms.Service.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class SessionController {
 
