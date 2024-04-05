@@ -50,7 +50,7 @@ public class SessionController {
     }
 
     @GetMapping(path = "/sessions/today", params = {"doctor_Id"})
-    public List<Session> findAllSessionsAvailableOnTodayByDoctorIdAndDate(@RequestParam int doctorId) {
+    public List<Session> findAllSessionsAvailableOnTodayByDoctorId(@RequestParam int doctorId) {
         // Get today's date
         LocalDate today = LocalDate.now();
 
@@ -63,7 +63,7 @@ public class SessionController {
     }
 
     @GetMapping(path = "/sessions/upcoming", params = {"doctor_Id"})
-    public List<Session> findAllUpcomingSessionsByDoctorIdAndDate(@RequestParam int doctorId) {
+    public List<Session> findAllUpcomingSessionsByDoctorId(@RequestParam int doctorId) {
         // Get today's date
         LocalDate today = LocalDate.now();
 
@@ -76,7 +76,7 @@ public class SessionController {
     }
 
     @GetMapping(path = "/sessions/history", params = {"doctor_Id"})
-    public List<Session> findAllPastSessionsByDoctorIdAndDate(@RequestParam int doctorId) {
+    public List<Session> findAllPastSessionsByDoctorId(@RequestParam int doctorId) {
         // Get today's date
         LocalDate today = LocalDate.now();
 
@@ -99,9 +99,9 @@ public class SessionController {
     }
 
     @PatchMapping(path = "/sessions/{id}")
-    public Session updateSessionStatus(@PathVariable int id, @RequestBody Map<String,String> requestBody) {
+    public Session updateSessionStatusById(@PathVariable int id, @RequestBody Map<String,String> requestBody) {
         String status = requestBody.get("status");
-        return sessionService.updateSessionStatus(id, status);
+        return sessionService.updateSessionStatusById(id, status);
     }
 
 }

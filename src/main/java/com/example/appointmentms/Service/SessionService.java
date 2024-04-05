@@ -47,7 +47,7 @@ public class SessionService {
         return sessionRepository.save(session);
     }
 
-    public Session updateSessionStatus(int id, String status) {
+    public Session updateSessionStatusById(int id, String status) {
         Session session = sessionRepository.findById(id).orElse(null);
         if (session == null) {
             return null;

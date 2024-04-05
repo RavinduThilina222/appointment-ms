@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 public class AppointmentController {
     private final AppointmentService appointmentService;
@@ -17,9 +19,9 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
-    @GetMapping(path = "/appointments/sessions/{id}")
-    public List<Appointment> getAllAppointmentsBySessionId(@PathVariable int id){
-        return appointmentService.getAllAppointmentsBySessionId(id);
+    @GetMapping(path = "/appointments/sessions/{session_id}")
+    public List<Appointment> getAllAppointmentsBySessionId(@PathVariable int session_id){
+        return appointmentService.getAllAppointmentsBySessionId(session_id);
     }
     
     @GetMapping(path = "/appointments", params = {"reference_no"})
@@ -27,13 +29,13 @@ public class AppointmentController {
         return appointmentService.getAppointmentByReferenceNo(reference_no);
     }
 
-    @GetMapping(path = "/appointments", params = {"Session_Id","Appointment_Id"})
-    public List<Appointment> getAppointmentBySessionIdAndAppointmentId(@RequestParam int Session_Id,@RequestParam int Appointment_Id) {
-        return appointmentService.getAppointmentBySessionIdAndAppointmentId(Session_Id,Appointment_Id);
+    @GetMapping(path = "/appointments", params = {"session_id","appointment_id"})
+    public List<Appointment> getAppointmentBySessionIdAndAppointmentId(@RequestParam int session_id,@RequestParam int appointment_id) {
+        return appointmentService.getAppointmentBySessionIdAndAppointmentId(session_id,appointment_id);
     }
 
     @GetMapping(value = "/appointments/today",params = {"patient_id"})
-    public List<Appointment> getAppointmentsAvailableTodayByPatientIdAndDate(@RequestParam int patient_id) {
+    public List<Appointment> getAppointmentsAvailableOnTodayByPatientId(@RequestParam int patient_id) {
         // Get today's date
         LocalDate today = LocalDate.now();
         
@@ -46,7 +48,7 @@ public class AppointmentController {
     }
 
     @GetMapping(value = "/appointments",params = {"date","patient_id"})
-    public List<Appointment> getAvailableAppointmentsByDateAndPatientIdAndDate(@RequestParam String date,@RequestParam int patient_id) {
+    public List<Appointment> getAvailableAppointmentsOnDateByPatientIdAndDate(@RequestParam String date,@RequestParam int patient_id) {
         // Get date
         LocalDate localDate = LocalDate.parse(date);
 
@@ -59,7 +61,7 @@ public class AppointmentController {
     }
 
     @GetMapping(value = "/appointments/history",params = {"patient_id"})
-    public List<Appointment> getAppointmentsHistoryByPatientIdAndDate(@RequestParam int patient_id) {
+    public List<Appointment> getAppointmentsHistoryByPatientId(@RequestParam int patient_id) {
         // Get today's date
         LocalDate today = LocalDate.now();
 
@@ -72,7 +74,7 @@ public class AppointmentController {
     }
 
     @GetMapping(value = "/appointments/upcoming",params = {"patient_id"})
-    public List<Appointment> getUpcomingAppointmentsByPatientIdAndDate(@RequestParam int patient_id) {
+    public List<Appointment> getUpcomingAppointmentsByPatientId(@RequestParam int patient_id) {
         // Get today's date
         LocalDate today = LocalDate.now();
 
@@ -100,10 +102,10 @@ public class AppointmentController {
     }
 
     @PatchMapping(path = "appointments/{appointment_id}")
-    public Appointment updateAppointmentStatus(@PathVariable int appointment_id, @RequestBody Map<String,String> requestBody) {
+    public Appointment updateAppointmentStatusByAppointmentId(@PathVariable int appointment_id, @RequestBody Map<String,String> requestBody) {
         int session_id = Integer.parseInt(requestBody.get("session_Id"));
         String status = requestBody.get("status");
-        return appointmentService.updateAppointmentStatus(session_id, appointment_id, status);
+        return appointmentService.updateAppointmentStatusByAppointmentId(session_id, appointment_id, status);
     }
 
 }
