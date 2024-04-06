@@ -34,7 +34,7 @@ public class AppointmentController {
         return appointmentService.getAppointmentBySessionIdAndAppointmentId(session_id,appointment_id);
     }
 
-    @GetMapping(value = "/appointments/today",params = {"patient_id"})
+    @GetMapping(path = "/appointments/today", params = {"patient_id"})
     public List<Appointment> getAppointmentsAvailableOnTodayByPatientId(@RequestParam int patient_id) {
         // Get today's date
         LocalDate today = LocalDate.now();
@@ -47,7 +47,7 @@ public class AppointmentController {
         return appointmentService.findAllAppointmentsAvailableOnDateByPatientIdAndDate(formattedDate,patient_id);
     }
 
-    @GetMapping(value = "/appointments",params = {"date","patient_id"})
+    @GetMapping(path = "/appointments",params = {"date","patient_id"})
     public List<Appointment> getAvailableAppointmentsOnDateByPatientIdAndDate(@RequestParam String date,@RequestParam int patient_id) {
         // Get date
         LocalDate localDate = LocalDate.parse(date);
@@ -60,7 +60,7 @@ public class AppointmentController {
         return appointmentService.findAllAppointmentsAvailableOnDateByPatientIdAndDate(formattedDate,patient_id);
     }
 
-    @GetMapping(value = "/appointments/history",params = {"patient_id"})
+    @GetMapping(path = "/appointments/history",params = {"patient_id"})
     public List<Appointment> getAppointmentsHistoryByPatientId(@RequestParam int patient_id) {
         // Get today's date
         LocalDate today = LocalDate.now();
@@ -73,7 +73,7 @@ public class AppointmentController {
         return appointmentService.findAllPastAppointmentsByPatientIdAndDate(formattedDate,patient_id);
     }
 
-    @GetMapping(value = "/appointments/upcoming",params = {"patient_id"})
+    @GetMapping(path = "/appointments/upcoming",params = {"patient_id"})
     public List<Appointment> getUpcomingAppointmentsByPatientId(@RequestParam int patient_id) {
         // Get today's date
         LocalDate today = LocalDate.now();
@@ -86,12 +86,12 @@ public class AppointmentController {
         return appointmentService.findAllUpcomingAppointmentsByPatientIdAndDate(formattedDate,patient_id);
     }
 
-    @GetMapping("/appointments/patients-count")
+    @GetMapping(path = "/appointments/patients-count", params = {"session_id"})
     public int findCountOfAllPatientsBySessionId(@RequestParam int session_id) {
         return appointmentService.findCountOfAllPatientsBySessionId(session_id);
     }
 
-    @GetMapping("/appointments/max-appointment-no")
+    @GetMapping(path = "/appointments/max-appointment-no", params = {"session_id"})
     public int findMaxAppointmentNoBySessionId(@RequestParam int session_id) {
         return appointmentService.findMaxAppointmentNoBySessionId(session_id);
     }
