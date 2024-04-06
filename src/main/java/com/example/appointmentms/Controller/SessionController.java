@@ -32,12 +32,12 @@ public class SessionController {
 
     //URL : http://localhost:8083/appointment-ms/sessions?doctor_Id=2
     @GetMapping(path = "/sessions", params = "doctor_Id")
-    public List<Session> findSessionsByDoctorId(@RequestParam int doctorId) {
-        return sessionService.findSessionsByDoctorId(doctorId);
+    public List<Session> findSessionsByDoctorId(@RequestParam int doctor_Id) {
+        return sessionService.findSessionsByDoctorId(doctor_Id);
     }
 
     @GetMapping(path = "/sessions", params = {"doctor_Id","date"})
-    public List<Session> findAllSessionsAvailableOnDateByDoctorIdAndDate(@RequestParam int doctorId,@RequestParam String date) {
+    public List<Session> findAllSessionsAvailableOnDateByDoctorIdAndDate(@RequestParam int doctor_Id,@RequestParam String date) {
         // Get date
         LocalDate localDate = LocalDate.parse(date);
 
@@ -46,11 +46,11 @@ public class SessionController {
         String formattedDate = localDate.format(formatter);
 
         // Call repository method with today's date
-        return sessionService.findAllSessionsAvailableOnDateByDoctorIdAndDate(doctorId, formattedDate);
+        return sessionService.findAllSessionsAvailableOnDateByDoctorIdAndDate(doctor_Id, formattedDate);
     }
 
     @GetMapping(path = "/sessions/today", params = {"doctor_Id"})
-    public List<Session> findAllSessionsAvailableOnTodayByDoctorId(@RequestParam int doctorId) {
+    public List<Session> findAllSessionsAvailableOnTodayByDoctorId(@RequestParam int doctor_Id) {
         // Get today's date
         LocalDate today = LocalDate.now();
 
@@ -59,11 +59,11 @@ public class SessionController {
         String formattedDate = today.format(formatter);
 
         // Call repository method with today's date
-        return sessionService.findAllSessionsAvailableOnDateByDoctorIdAndDate(doctorId, formattedDate);
+        return sessionService.findAllSessionsAvailableOnDateByDoctorIdAndDate(doctor_Id, formattedDate);
     }
 
     @GetMapping(path = "/sessions/upcoming", params = {"doctor_Id"})
-    public List<Session> findAllUpcomingSessionsByDoctorId(@RequestParam int doctorId) {
+    public List<Session> findAllUpcomingSessionsByDoctorId(@RequestParam int doctor_Id) {
         // Get today's date
         LocalDate today = LocalDate.now();
 
@@ -72,11 +72,11 @@ public class SessionController {
         String formattedDate = today.format(formatter);
 
         // Call repository method with today's date
-        return sessionService.findAllUpcomingSessionsByDoctorIdAndDate(doctorId, formattedDate);
+        return sessionService.findAllUpcomingSessionsByDoctorIdAndDate(doctor_Id, formattedDate);
     }
 
     @GetMapping(path = "/sessions/history", params = {"doctor_Id"})
-    public List<Session> findAllPastSessionsByDoctorId(@RequestParam int doctorId) {
+    public List<Session> findAllPastSessionsByDoctorId(@RequestParam int doctor_Id) {
         // Get today's date
         LocalDate today = LocalDate.now();
 
@@ -85,7 +85,7 @@ public class SessionController {
         String formattedDate = today.format(formatter);
 
         // Call repository method with today's date
-        return sessionService.findAllPastSessionsByDoctorIdAndDate(doctorId, formattedDate);
+        return sessionService.findAllPastSessionsByDoctorIdAndDate(doctor_Id, formattedDate);
     }
 
     @PostMapping(path = "/sessions")
@@ -100,8 +100,8 @@ public class SessionController {
 
     @PatchMapping(path = "/sessions/{id}")
     public Session updateSessionStatusById(@PathVariable int id, @RequestBody Map<String,String> requestBody) {
-        String status = requestBody.get("status");
-        return sessionService.updateSessionStatusById(id, status);
+        String session_status = requestBody.get("session_status");
+        return sessionService.updateSessionStatusById(id, session_status);
     }
 
 }

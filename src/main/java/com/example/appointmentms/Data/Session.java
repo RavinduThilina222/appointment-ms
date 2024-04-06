@@ -82,7 +82,7 @@ public class Session {
     public String getSession_Status() {
         return Session_Status;
     }
-    public void setSession_Status(String session_Status) {
-        Session_Status = session_Status;
+    public void setSession_Status(String session_status) {
+        Session_Status = session_status;
     }
 }
