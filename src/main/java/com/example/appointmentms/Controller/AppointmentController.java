@@ -91,6 +91,11 @@ public class AppointmentController {
         return appointmentService.findCountOfAllPatientsBySessionId(session_id);
     }
 
+    @GetMapping("/appointments/max-appointment-no")
+    public int findMaxAppointmentNoBySessionId(@RequestParam int session_id) {
+        return appointmentService.findMaxAppointmentNoBySessionId(session_id);
+    }
+
     @PostMapping(path = "/appointments")
     public Appointment addAppointment(@RequestBody Appointment appointment){
         return appointmentService.addAppointment(appointment);

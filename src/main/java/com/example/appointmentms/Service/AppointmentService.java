@@ -42,6 +42,10 @@ public class AppointmentService {
         return appointmentRepository.findCountOfAllPatientsBySessionId(Session_Id);
     }
 
+    public int findMaxAppointmentNoBySessionId(int session_id) {
+        return appointmentRepository.findMaxAppointmentNoBySessionId(session_id);
+    }
+
     public Appointment addAppointment(Appointment appointment){
         return appointmentRepository.save(appointment);
     }
